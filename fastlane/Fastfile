@@ -14,11 +14,6 @@
 # update_fastlane
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
     gradle(task: "clean assembleRelease")
@@ -32,11 +27,6 @@ platform :android do
 end
 
 platform :ios do
-  desc "Runs all the tests"
-  lane :test do
-
-  end
-
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
 
