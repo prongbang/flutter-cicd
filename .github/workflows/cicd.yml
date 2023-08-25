@@ -8,6 +8,7 @@ name: CI/CD
 on:
   push:
     branches: [ "config/1-fastlane" ]
+  workflow_dispatch:
 
 jobs:
   unit-test:
