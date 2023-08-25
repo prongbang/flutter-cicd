@@ -10,7 +10,22 @@ on:
     branches: [ "config/1-fastlane" ]
 
 jobs:
-  build:
+  unit-test:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Unit Test
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.13.0'
+          architecture: x64
+      - run: flutter pub get
+      - run: flutter test
+      
+  build-android:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -22,14 +37,20 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       
-      - name: Unit Test
+      - name: Build Android
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.13.0'
           architecture: x64
       - run: flutter pub get
-      - run: flutter test
+      - run: flutter build apk
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       
       - name: Build iOS
         uses: subosito/flutter-action@v2
@@ -40,11 +61,3 @@ jobs:
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
       
-      - name: Build Android
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.13.0'
-          architecture: x64
-      - run: flutter pub get
-      - run: flutter build apk
