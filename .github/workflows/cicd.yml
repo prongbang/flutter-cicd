@@ -69,7 +69,7 @@ jobs:
 
   distribute-android:
     name: Distribute Android
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: ["build-android"]
     steps:
       - name: Checkout
@@ -89,8 +89,8 @@ jobs:
 
   distribute-ios:
     name: Distribute iOS
-    runs-on: macos-latest
-    needs: ["build-ios"]
+    runs-on: macos-13
+    #needs: ["build-ios"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -98,7 +98,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.0'
           bundler-cache: true
 
       - name: Fastlane Action
