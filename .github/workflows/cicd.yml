@@ -12,13 +12,13 @@ on:
 
 jobs:
   unit-test:
-    name: Unit Test
+    name: Unit Test 🔥
     runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Unit Test
+      - name: Unit Test 🔥
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -28,7 +28,7 @@ jobs:
       - run: flutter test
       
   build-android:
-    name: Build Android
+    name: Build Android 🔥
     runs-on: macos-13
     needs: unit-test
     steps:
@@ -41,7 +41,7 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       
-      - name: Build APK
+      - name: Build APK 🔥
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -51,14 +51,14 @@ jobs:
       - run: flutter build apk
 
   build-ios:
-    name: Build iOS
+    name: Build iOS 🔥
     runs-on: macos-13
     needs: unit-test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Build IPA
+      - name: Build IPA 🔥
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -68,7 +68,7 @@ jobs:
       - run: flutter build ios --release --no-codesign
 
   distribute-android:
-    name: Distribute Android
+    name: Distribute Android 🚀
     runs-on: macos-13
     needs: ["build-android"]
     steps:
@@ -81,14 +81,16 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
-      - name: Distribute to Firebase
+      - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           lane: 'android deploy'
           options: '{ "option1": "value1", "option2": "value2" }'
 
   distribute-ios:
-    name: Distribute iOS
+    name: Distribute iOS 🚀
     runs-on: macos-13
     needs: ["build-ios"]
     steps:
@@ -101,8 +103,10 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
-      - name: Distribute to Firebase
+      - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           lane: 'ios deploy'
           options: '{ "option1": "value1", "option2": "value2" }'
