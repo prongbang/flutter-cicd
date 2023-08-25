@@ -23,13 +23,13 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.13.0'
-          architecture: x64
+          architecture: x86_64
       - run: flutter pub get
       - run: flutter test
       
   build-android:
     name: Build Android
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: unit-test
     steps:
       - name: Checkout
@@ -46,13 +46,13 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.13.0'
-          architecture: x64
+          architecture: x86_64
       - run: flutter pub get
       - run: flutter build apk
 
   build-ios:
     name: Build iOS
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: unit-test
     steps:
       - name: Checkout
@@ -63,7 +63,7 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.13.0'
-          architecture: x64
+          architecture: x86_64
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
 
@@ -80,6 +80,7 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+          architecture: x86_64
 
       - name: Fastlane Action
         uses: maierj/fastlane-action@v3.0.0
@@ -98,8 +99,9 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.2'
           bundler-cache: true
+          architecture: x86_64
 
       - name: Fastlane Action
         uses: maierj/fastlane-action@v3.0.0
