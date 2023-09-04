@@ -86,7 +86,7 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
-          lane: 'android deploy'
+          lane: 'android distribute'
           options: '{ "option1": "value1", "option2": "value2" }'
 
   distribute-ios:
@@ -108,5 +108,5 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
-          lane: 'ios deploy'
+          lane: 'ios distribute'
           options: '{ "option1": "value1", "option2": "value2" }'
