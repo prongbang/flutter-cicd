@@ -41,6 +41,13 @@ platform :ios do
 
   desc "Deploy a new version to the Firebase App Distributes"
   lane :deploy do
-
+    firebase_token = ENV["FIREBASE_TOKEN"]
+    firebase_app_distribution(
+        firebase_token: firebase_token,
+        app: "1:967761019225:ios:9839a54200071d2aa64c48",
+        testers: "cicd-test",
+        ipa_path: "ios/build/Runner/Runner.ipa",
+        release_notes: "Lots of amazing new features to test out!"
+    )
   end
 end
