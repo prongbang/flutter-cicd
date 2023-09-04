@@ -50,6 +50,13 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk
 
+      - name: Upload APK
+        uses: actions/upload-artifact
+        with:
+          name: android-artifact
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 1
+
   build-ios:
     name: Build iOS 🔥
     runs-on: macos-13
@@ -68,6 +75,13 @@ jobs:
       - run: flutter build ios --release --no-codesign
       #- run: build ipa here
 
+      - name: Upload IPA
+        uses: actions/upload-artifact
+        with:
+          name: ios-artifact
+          path: build/ios/iphoneos/Runner.app
+          retention-days: 1
+
   distribute-android:
     name: Distribute Android 🚀
     runs-on: macos-13
@@ -81,6 +95,12 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: Download APK
+        uses: actions/download-artifact@v3
+        with:
+          name: android-artifact
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
@@ -103,6 +123,12 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: Download IPA
+        uses: actions/download-artifact@v3
+        with:
+          name: ios-artifact
+          path: build/ios/iphoneos/Runner.app
 
       - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
