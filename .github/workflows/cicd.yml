@@ -66,6 +66,7 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
+      #- run: build ipa here
 
   distribute-android:
     name: Distribute Android 🚀
