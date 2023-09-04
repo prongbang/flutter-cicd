@@ -22,7 +22,14 @@ platform :android do
 
   desc "Deploy a new version to the  Firebase App Distributes"
   lane :deploy do
-
+    firebase_token = ENV["FIREBASE_TOKEN"]
+    firebase_app_distribution(
+        firebase_token: firebase_token,
+        app: "1:967761019225:android:7da7df5d6d49b944a64c48",
+        testers: "cicd-test",
+        apk_path: "build/app/outputs/flutter-apk/app.apk",
+        release_notes: "Lots of amazing new features to test out!"
+    )
   end
 end
 
