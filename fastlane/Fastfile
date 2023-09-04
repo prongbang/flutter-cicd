@@ -24,7 +24,7 @@ platform :android do
   lane :distribute do
     firebase_token = ENV["FIREBASE_TOKEN"]
     firebase_app_distribution(
-        firebase_token: firebase_token,
+        firebase_cli_token: firebase_token,
         app: "1:967761019225:android:7da7df5d6d49b944a64c48",
         testers: "cicd-test",
         apk_path: "build/app/outputs/flutter-apk/app-release.apk",
@@ -43,7 +43,7 @@ platform :ios do
   lane :distribute do
     firebase_token = ENV["FIREBASE_TOKEN"]
     firebase_app_distribution(
-        firebase_token: firebase_token,
+        firebase_cli_token: firebase_token,
         app: "1:967761019225:ios:9839a54200071d2aa64c48",
         testers: "cicd-test",
         ipa_path: "build/ios/iphoneos/Runner.app",
