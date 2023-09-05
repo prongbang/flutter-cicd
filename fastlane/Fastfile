@@ -16,8 +16,7 @@
 platform :android do
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
+    UI.message("beta")
   end
 
   desc "Deploy a new version to the  Firebase App Distributes"
@@ -26,7 +25,7 @@ platform :android do
     firebase_app_distribution(
         firebase_cli_token: firebase_token,
         app: "1:967761019225:android:7da7df5d6d49b944a64c48",
-        testers: "cicd-test",
+        groups: "cicd-test",
         apk_path: "/Users/runner/work/flutter_cicd/flutter_cicd/build/app/outputs/flutter-apk/app-release.apk",
         release_notes: "Lots of amazing new features to test out!"
     )
@@ -36,7 +35,7 @@ end
 platform :ios do
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-
+    UI.message("beta")
   end
 
   desc "Deploy a new version to the Firebase App Distributes"
@@ -45,7 +44,7 @@ platform :ios do
     firebase_app_distribution(
         firebase_cli_token: firebase_token,
         app: "1:967761019225:ios:9839a54200071d2aa64c48",
-        testers: "cicd-test",
+        groups: "cicd-test",
         ipa_path: "/Users/runner/work/flutter_cicd/flutter_cicd/flutter_cicd/build/ios/iphoneos/Runner.app",
         release_notes: "Lots of amazing new features to test out!"
     )

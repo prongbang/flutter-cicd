@@ -13,7 +13,7 @@ on:
 jobs:
   unit-test:
     name: Unit Test 🔥
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,8 +27,8 @@ jobs:
       - run: flutter pub get
       - run: flutter test
       
-  build-android:
-    name: Build Android 🔥
+  distribute-android:
+    name: Distribute Android 🔥
     runs-on: macos-13
     needs: unit-test
     steps:
@@ -50,15 +50,22 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          name: android-artifact
-          path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 1
+          ruby-version: '3.2'
+          bundler-cache: true
 
-  build-ios:
-    name: Build iOS 🔥
+      - name: Distribute to Firebase 🚀
+        uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        with:
+          lane: 'android distribute'
+          options: '{ "option1": "value1", "option2": "value2" }'
+
+  distribute-ios:
+    name: Distribute iOS 🔥
     runs-on: macos-13
     needs: unit-test
     steps:
@@ -74,60 +81,11 @@ jobs:
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
 
-      - name: Upload IPA
-        uses: actions/upload-artifact@v2
-        with:
-          name: ios-artifact
-          path: build/ios/iphoneos/Runner.app
-          retention-days: 1
-
-  distribute-android:
-    name: Distribute Android 🚀
-    runs-on: macos-13
-    needs: ["build-android"]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
-
-      - name: Download APK
-        uses: actions/download-artifact@v2
-        with:
-          name: android-artifact
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-      - name: Distribute to Firebase 🚀
-        uses: maierj/fastlane-action@v3.0.0
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        with:
-          lane: 'android distribute'
-          options: '{ "option1": "value1", "option2": "value2" }'
-
-  distribute-ios:
-    name: Distribute iOS 🚀
-    runs-on: macos-13
-    needs: ["build-ios"]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-
-      - name: Download IPA
-        uses: actions/download-artifact@v2
-        with:
-          name: ios-artifact
-          path: build/ios/iphoneos/Runner.app
 
       - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
