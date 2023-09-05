@@ -45,7 +45,8 @@ platform :ios do
         firebase_cli_token: firebase_token,
         app: "1:967761019225:ios:9839a54200071d2aa64c48",
         groups: "cicd-test",
-        ipa_path: "ios/build/Runner/Runner.app",
+        # TODO fake IPA file
+        ipa_path: "/Users/runner/work/flutter_cicd/flutter_cicd/build/ios/iphoneos/Runner.app",
         release_notes: "Lots of amazing new features to test out!"
     )
   end
