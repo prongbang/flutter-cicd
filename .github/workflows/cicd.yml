@@ -80,6 +80,8 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
+      # Fake IPA
+      - run: cp /Users/runner/work/flutter_cicd/flutter_cicd/build/ios/iphoneos/Runner.app /Users/runner/work/flutter_cicd/flutter_cicd/build/ios/iphoneos/Runner.ipa
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
