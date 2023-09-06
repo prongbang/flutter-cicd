@@ -26,21 +26,21 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter test
-      
-  distribute-android:
-    name: Distribute Android 🔥
+
+  build-android:
+    name: Build Android 🔥
     runs-on: macos-13
     needs: unit-test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
           java-version: '11'
-      
+
       - name: Build APK 🔥
         uses: subosito/flutter-action@v2
         with:
@@ -49,6 +49,28 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter build apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk-artifact
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  distribute-android:
+    name: Distribute Android 🔥
+    runs-on: macos-13
+    needs: ["build-android"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: apk-artifact
+          path: build/app/outputs/flutter-apk
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: build/app/outputs/flutter-apk
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
