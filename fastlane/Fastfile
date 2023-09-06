@@ -26,7 +26,7 @@ platform :android do
         firebase_cli_token: firebase_token,
         app: "1:967761019225:android:7da7df5d6d49b944a64c48",
         groups: "cicd-test",
-        apk_path: "/Users/runner/work/flutter_cicd/flutter_cicd/build/app/outputs/flutter-apk/app-release.apk",
+        apk_path: "build/app/outputs/flutter-apk/app-release.apk",
         release_notes: "Lots of amazing new features to test out!"
     )
   end
@@ -46,7 +46,7 @@ platform :ios do
         app: "1:967761019225:ios:9839a54200071d2aa64c48",
         groups: "cicd-test",
         # TODO fake IPA file
-        ipa_path: "/Users/runner/work/flutter_cicd/flutter_cicd/build/ios/iphoneos/Runner.ipa",
+        ipa_path: "build/ios/iphoneos/Runner.ipa",
         release_notes: "Lots of amazing new features to test out!"
     )
   end
