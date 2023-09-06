@@ -72,7 +72,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Build IPA 🔥
+      - name: Build App 🔥
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -80,15 +80,17 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
-      # Fake IPA
-      - run: cd build/ios/iphoneos/ && zip -r -y Runner.zip Runner.app && cd -
-      - run: mv build/ios/iphoneos/Runner.zip build/ios/iphoneos/Runner.ipa
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: Build IPA 🚀
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'ios build_ipa_development'
 
       - name: Distribute to Firebase 🚀
         uses: maierj/fastlane-action@v3.0.0
